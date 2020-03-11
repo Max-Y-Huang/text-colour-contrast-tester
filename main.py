@@ -1,3 +1,13 @@
+"""===========================================================================
+| TEXT COLOUR CONTRAST CALCULATOR
+|   By: Max Huang
+|   Last edited: March 11th, 2020
+|
+| This program calculates the colour contrast between the text colour and the
+| background colour in accordance to W3C's Web Content Accessibility
+| Guidelines.
+==========================================================================="""
+
 import re
 
 # Terminal colours.
@@ -62,32 +72,46 @@ def getRelativeLuminance(colour):
 
   return r + g + b
 
-print(tc.PURPLE)
-print('======================================================')
-print('|               COLOUR CONTRAST TESTER               |')
-print('======================================================\n')
+# Runs the UI procedure.
+def run():
 
-c1 = inputColour(f'Enter colour #1 (hex or rgb):{tc.BLUE}\n > ')
-c2 = inputColour(f'Enter colour #2 (hex or rgb):{tc.BLUE}\n > ')
+  runAgain = 'y'
 
-l1 = getRelativeLuminance(c1)
-l2 = getRelativeLuminance(c2)
+  while runAgain == 'y' or runAgain == 'Y':
 
-contrastRatio = (l1 + 0.05) / (l2 + 0.05)
-if contrastRatio < 1:
-  contrastRatio = 1 / contrastRatio
+    print(tc.PURPLE)
+    print('*==========================================================*')
+    print('| TEXT COLOUR CONTRAST CALCULATOR                          |')
+    print('*==========================================================*\n')
 
-statusMessage = f'{tc.GREEN}Good contrast. Works for all text.'
-if contrastRatio < 3:
-  statusMessage = f'{tc.RED}Bad contrast. Doesn\'t work for any text.'
-elif contrastRatio < 4.5:
-  statusMessage = f'{tc.YELLOW}OK contrast. Works for larger text.' 
+    c1 = inputColour(f'Enter the text colour (hex or rgb):{tc.BLUE}\n > ')
+    c2 = inputColour(f'Enter enter the background colour (hex or rgb):{tc.BLUE}\n > ')
 
-print(tc.WHITE)
-print('------------------------------------------------------\n')
-print(f'Relative luminance of colour #1:    {tc.BLUE}{l1}{tc.WHITE}')
-print(f'Relative luminance of colour #2:    {tc.BLUE}{l2}{tc.WHITE}')
-print(f'Relative luminance of colour #1:    {tc.BLUE}{l1}{tc.WHITE}')
-print(f'Contrast ratio                      {tc.BLUE}{contrastRatio}\n')
-print(f'{statusMessage}{tc.WHITE}\n')
-print('======================================================')
+    l1 = getRelativeLuminance(c1)
+    l2 = getRelativeLuminance(c2)
+
+    contrastRatio = (l1 + 0.05) / (l2 + 0.05)
+    if contrastRatio < 1:
+      contrastRatio = 1 / contrastRatio
+
+    statusMessage = f'{tc.GREEN}Good contrast.'
+    if contrastRatio < 3:
+      statusMessage = f'{tc.RED}Bad contrast. Avoid this colour combination.'
+    elif contrastRatio < 4.5:
+      statusMessage = f'{tc.YELLOW}OK contrast. Be wary when using this colour combination.' 
+
+    print(tc.WHITE)
+    print('------------------------------------------------------------\n')
+    print(f'Relative luminance of the text colour:          {tc.BLUE}{l1}{tc.WHITE}')
+    print(f'Relative luminance of the background colour:    {tc.BLUE}{l2}{tc.WHITE}')
+    print(f'Contrast ratio                                  {tc.BLUE}{contrastRatio}\n')
+    print(f'{statusMessage}{tc.WHITE}\n')
+
+    runAgain = str(input(f'Run again? (y/n){tc.BLUE}\n > ')[0])
+
+  print(tc.PURPLE)
+  print('*==========================================================*')
+  print('| GOOD BYE                                                 |')
+  print('*==========================================================*')
+
+run()
