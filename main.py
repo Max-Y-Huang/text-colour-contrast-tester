@@ -85,7 +85,7 @@ def run():
     print('*==========================================================*\n')
 
     c1 = inputColour(f'Enter the text colour (hex or rgb):{tc.BLUE}\n > ')
-    c2 = inputColour(f'Enter enter the background colour (hex or rgb):{tc.BLUE}\n > ')
+    c2 = inputColour(f'Enter the background colour (hex or rgb):{tc.BLUE}\n > ')
 
     l1 = getRelativeLuminance(c1)
     l2 = getRelativeLuminance(c2)
