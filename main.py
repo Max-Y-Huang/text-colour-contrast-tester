@@ -1,13 +1,16 @@
 import re
 
-# Terminal colours
+# Terminal colours.
 class tc:
-  PURPLE = '\033[95m'
-  BLUE   = '\033[94m'
-  GREEN  = '\033[92m'
-  YELLOW = '\033[93m'
-  RED    = '\033[91m'
-  WHITE  = '\033[0m'
+
+  useColour = True
+  
+  PURPLE = '\033[95m' if useColour else ''
+  BLUE   = '\033[94m' if useColour else ''
+  GREEN  = '\033[92m' if useColour else ''
+  YELLOW = '\033[93m' if useColour else ''
+  RED    = '\033[91m' if useColour else ''
+  WHITE  = '\033[0m'  if useColour else ''
 
 # Returns the match if success (False if fail).
 def exactMatch(regex, findStr):
