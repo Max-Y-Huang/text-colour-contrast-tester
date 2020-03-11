@@ -4,8 +4,8 @@
 |   Last edited: March 11th, 2020
 |
 | This program calculates the colour contrast between the text colour and the
-| background colour in accordance to W3C's Web Content Accessibility
-| Guidelines.
+| background colour in accordance with W3C's Web Content Accessibility
+| Guidelines (enforces luminance contrast).
 ==========================================================================="""
 
 import re
@@ -80,9 +80,12 @@ def run():
   while runAgain == 'y' or runAgain == 'Y':
 
     print(tc.PURPLE)
-    print('*==========================================================*')
-    print('| TEXT COLOUR CONTRAST CALCULATOR                          |')
-    print('*==========================================================*\n')
+    print('*================================================================*')
+    print('| TEXT COLOUR CONTRAST CALCULATOR                                |')
+    print('|                                                                |')
+    print('| In accordance with W3C\'s Web Content Accessibility Guidelines  |')
+    print('| (which pertains luminance contrast).                           |')
+    print('*================================================================*\n')
 
     c1 = inputColour(f'Enter the text colour (hex or rgb):{tc.BLUE}\n > ')
     c2 = inputColour(f'Enter the background colour (hex or rgb):{tc.BLUE}\n > ')
@@ -101,7 +104,7 @@ def run():
       statusMessage = f'{tc.YELLOW}OK contrast. Be wary when using this colour combination.' 
 
     print(tc.WHITE)
-    print('------------------------------------------------------------\n')
+    print('------------------------------------------------------------------\n')
     print(f'Relative luminance of the text colour:          {tc.BLUE}{l1}{tc.WHITE}')
     print(f'Relative luminance of the background colour:    {tc.BLUE}{l2}{tc.WHITE}')
     print(f'Contrast ratio                                  {tc.BLUE}{contrastRatio}\n')
@@ -110,8 +113,8 @@ def run():
     runAgain = str(input(f'Run again? (y/n){tc.BLUE}\n > ')[0])
 
   print(tc.PURPLE)
-  print('*==========================================================*')
-  print('| GOOD BYE                                                 |')
-  print('*==========================================================*')
+  print('*================================================================*')
+  print('| GOOD BYE                                                       |')
+  print('*================================================================*')
 
 run()
