@@ -9,6 +9,8 @@
 ==========================================================================="""
 
 import re
+import colorama
+colorama.init()
 
 # Terminal colours.
 class tc:
@@ -29,14 +31,15 @@ def exactMatch(regex, findStr):
   return finds[0] if len(finds) == 1 else False
 
 # Allows for the input of a colour in RGB or hex. Runs until valid input.
-def inputColour(inputText):
+def inputColour(inputText, textColour=tc.WHITE, inputColour=tc.BLUE):
 
   hexTest = re.compile('#[a-fA-F0-9]{6}')
   rgbTest = re.compile('\d+[,\s]{1}\d+[,\s]{1}\d+')
 
   while True:
 
-    c = input(tc.WHITE + inputText)
+    print(f'{textColour}{inputText}{inputColour}')
+    c = input(' > ')
     hexMatch = exactMatch(hexTest, c)
     rgbMatch = exactMatch(rgbTest, c)
 
@@ -87,8 +90,8 @@ def run():
     print('| (which pertains luminance contrast).                           |')
     print('*================================================================*\n')
 
-    c1 = inputColour(f'Enter the text colour (hex or rgb):{tc.BLUE}\n > ')
-    c2 = inputColour(f'Enter the background colour (hex or rgb):{tc.BLUE}\n > ')
+    c1 = inputColour(f'Enter the text colour (hex or rgb):')
+    c2 = inputColour(f'Enter the background colour (hex or rgb):')
 
     l1 = getRelativeLuminance(c1)
     l2 = getRelativeLuminance(c2)
@@ -108,9 +111,10 @@ def run():
     print(f'Relative luminance of the text colour:          {tc.BLUE}{l1}{tc.WHITE}')
     print(f'Relative luminance of the background colour:    {tc.BLUE}{l2}{tc.WHITE}')
     print(f'Contrast ratio                                  {tc.BLUE}{contrastRatio}\n')
-    print(f'{statusMessage}{tc.WHITE}\n')
+    print(f'{statusMessage}\n')
 
-    runAgain = str(input(f'Run again? (y/n){tc.BLUE}\n > ')[0])
+    print(f'{tc.WHITE}Run again? (y/n){tc.BLUE}')
+    runAgain = str(input(' > ')[0])
 
   print(tc.PURPLE)
   print('*================================================================*')
