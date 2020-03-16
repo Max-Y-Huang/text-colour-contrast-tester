@@ -78,17 +78,22 @@ def getRelativeLuminance(colour):
 # Runs the UI procedure.
 def run():
 
+  firstRun = True
   runAgain = 'y'
 
   while runAgain == 'y' or runAgain == 'Y':
 
-    print(tc.PURPLE)
-    print('*================================================================*')
-    print('| TEXT COLOUR CONTRAST CALCULATOR                                |')
-    print('|                                                                |')
-    print('| In accordance with W3C\'s Web Content Accessibility Guidelines  |')
-    print('| (which pertains luminance contrast).                           |')
-    print('*================================================================*\n')
+    if firstRun:
+      print(tc.PURPLE)
+      print('*================================================================*')
+      print('| TEXT COLOUR CONTRAST CALCULATOR                                |')
+      print('|                                                                |')
+      print('| In accordance with W3C\'s Web Content Accessibility Guidelines  |')
+      print('| (which pertains luminance contrast).                           |')
+      print('*================================================================*\n')
+    else:
+      print(tc.PURPLE)
+      print('==================================================================\n')
 
     c1 = inputColour(f'Enter the text colour (hex or rgb):')
     c2 = inputColour(f'Enter the background colour (hex or rgb):')
@@ -115,6 +120,7 @@ def run():
 
     print(f'{tc.WHITE}Run again? (y/n){tc.BLUE}')
     runAgain = str(input(' > ')[0])
+    firstRun = False
 
   print(tc.PURPLE)
   print('*================================================================*')
