@@ -1,11 +1,10 @@
 """===========================================================================
 | TEXT COLOUR CONTRAST CALCULATOR
 |   By: Max Huang
-|   Last edited: March 11th, 2020
+|   Last edited: April 24th, 2020
 |
-| This program calculates the colour contrast between the text colour and the
-| background colour in accordance with W3C's Web Content Accessibility
-| Guidelines (enforces luminance contrast).
+| This program calculates the colour contrast between two colours in
+| accordance with W3C's Web Content Accessibility Guidelines.
 ==========================================================================="""
 
 import re
@@ -66,7 +65,7 @@ def gammaCorrection(val):
 
   return val / 12.92 if val < 0.03928 else ((val + 0.055) / 1.055) ** 2.4
 
-# Gets the relative luminance of a number (between 0 and 1)
+# Gets the relative luminance of a number (between 0 and 1).
 def getRelativeLuminance(colour):
 
   r = gammaCorrection(colour['r'] / 255) * 0.2126
@@ -74,6 +73,19 @@ def getRelativeLuminance(colour):
   b = gammaCorrection(colour['b'] / 255) * 0.0722
 
   return r + g + b
+
+# Gets the WCAG score (Fail, AA, AAA). AAA score is optional.
+def WCAGScore(variable, AAThreshold, AAAThreshold=-1):
+
+  if variable < AAThreshold:
+    return f'{tc.RED}Fail'
+
+  if AAAThreshold == -1:
+    return f'{tc.GREEN}AA'
+
+  if variable < AAAThreshold:
+    return f'{tc.YELLOW}AA'
+  return f'{tc.GREEN}AAA'
 
 # Runs the UI procedure.
 def run():
@@ -88,15 +100,14 @@ def run():
       print('*================================================================*')
       print('| TEXT COLOUR CONTRAST CALCULATOR                                |')
       print('|                                                                |')
-      print('| In accordance with W3C\'s Web Content Accessibility Guidelines  |')
-      print('| (which pertains luminance contrast).                           |')
+      print('| In accordance with W3C\'s Web Content Accessibility Guidelines. |')
       print('*================================================================*\n')
     else:
       print(tc.PURPLE)
       print('==================================================================\n')
 
-    c1 = inputColour(f'Enter the text colour (hex or rgb):')
-    c2 = inputColour(f'Enter the background colour (hex or rgb):')
+    c1 = inputColour(f'Enter colour 1 (hex or rgb):')
+    c2 = inputColour(f'Enter colour 2 (hex or rgb):')
 
     l1 = getRelativeLuminance(c1)
     l2 = getRelativeLuminance(c2)
@@ -105,20 +116,24 @@ def run():
     if contrastRatio < 1:
       contrastRatio = 1 / contrastRatio
 
-    statusMessage = f'{tc.GREEN}Good contrast.'
-    if contrastRatio < 3:
-      statusMessage = f'{tc.RED}Bad contrast. Avoid this colour combination.'
-    elif contrastRatio < 4.5:
-      statusMessage = f'{tc.YELLOW}OK contrast. Be wary when using this colour combination.' 
+    normalTextScore      = WCAGScore(contrastRatio, 4.5, 7)
+    largeTextScore       = WCAGScore(contrastRatio, 3, 4.5)
+    graphicalObjectScore = WCAGScore(contrastRatio, 3)
 
     print(tc.WHITE)
     print('------------------------------------------------------------------\n')
-    print(f'Relative luminance of the text colour:          {tc.BLUE}{l1}{tc.WHITE}')
-    print(f'Relative luminance of the background colour:    {tc.BLUE}{l2}{tc.WHITE}')
-    print(f'Contrast ratio                                  {tc.BLUE}{contrastRatio}\n')
-    print(f'{statusMessage}\n')
+    print(f'Relative luminance of colour 1:    {tc.BLUE}{l1}{tc.WHITE}')
+    print(f'Relative luminance of colour 2:    {tc.BLUE}{l2}{tc.WHITE}')
+    print(f'Contrast ratio                     {tc.BLUE}{contrastRatio}')
 
-    print(f'{tc.WHITE}Run again? (y/n){tc.BLUE}')
+    print(tc.WHITE)
+    print('Contrast ratings for...')
+    print(f' - Normal text:          {normalTextScore}{tc.WHITE}')
+    print(f' - Large text:           {largeTextScore}{tc.WHITE}')
+    print(f' - Graphical objects:    {graphicalObjectScore}')
+
+    print(tc.WHITE)
+    print(f'Run again? (y/n){tc.BLUE}')
     runAgain = str(input(' > ')[0])
     firstRun = False
 
