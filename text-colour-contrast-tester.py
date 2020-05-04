@@ -1,7 +1,7 @@
 """===========================================================================
 | TEXT COLOUR CONTRAST CALCULATOR
 |   By: Max Huang
-|   Last edited: April 24th, 2020
+|   Last edited: May 3rd, 2020
 |
 | This program calculates the colour contrast between two colours in
 | accordance with W3C's Web Content Accessibility Guidelines.
