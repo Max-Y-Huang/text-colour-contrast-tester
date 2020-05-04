@@ -7,8 +7,7 @@
 | accordance with W3C's Web Content Accessibility Guidelines.
 ==========================================================================="""
 
-import re
-import colorama
+import time, re, colorama
 colorama.init()
 
 # Terminal colours.
@@ -87,59 +86,53 @@ def WCAGScore(variable, AAThreshold, AAAThreshold=-1):
     return f'{tc.YELLOW}AA'
   return f'{tc.GREEN}AAA'
 
-# Runs the UI procedure.
-def run():
 
-  firstRun = True
-  runAgain = 'y'
+firstRun = True
+runAgain = 'y'
 
-  while runAgain == 'y' or runAgain == 'Y':
+while runAgain == 'y' or runAgain == 'Y':
 
-    if firstRun:
-      print(tc.PURPLE)
-      print('*================================================================*')
-      print('| TEXT COLOUR CONTRAST CALCULATOR                                |')
-      print('|                                                                |')
-      print('| In accordance with W3C\'s Web Content Accessibility Guidelines. |')
-      print('*================================================================*\n')
-    else:
-      print(tc.PURPLE)
-      print('==================================================================\n')
+  if firstRun:
+    print(f'{tc.PURPLE}*================================================================*')
+    print('| TEXT COLOUR CONTRAST CALCULATOR                                |')
+    print('|                                                                |')
+    print('| In accordance with W3C\'s Web Content Accessibility Guidelines. |')
+    print('*================================================================*\n')
+  else:
+    print(tc.PURPLE)
+    print('==================================================================\n')
 
-    c1 = inputColour(f'Enter colour 1 (hex or rgb):')
-    c2 = inputColour(f'Enter colour 2 (hex or rgb):')
+  c1 = inputColour(f'Enter colour 1 (hex or rgb):')
+  c2 = inputColour(f'Enter colour 2 (hex or rgb):')
 
-    l1 = getRelativeLuminance(c1)
-    l2 = getRelativeLuminance(c2)
+  l1 = getRelativeLuminance(c1)
+  l2 = getRelativeLuminance(c2)
 
-    contrastRatio = (l1 + 0.05) / (l2 + 0.05)
-    if contrastRatio < 1:
-      contrastRatio = 1 / contrastRatio
+  contrastRatio = (l1 + 0.05) / (l2 + 0.05)
+  if contrastRatio < 1:
+    contrastRatio = 1 / contrastRatio
 
-    normalTextScore      = WCAGScore(contrastRatio, 4.5, 7)
-    largeTextScore       = WCAGScore(contrastRatio, 3, 4.5)
-    graphicalObjectScore = WCAGScore(contrastRatio, 3)
+  normalTextScore      = WCAGScore(contrastRatio, 4.5, 7)
+  largeTextScore       = WCAGScore(contrastRatio, 3, 4.5)
+  graphicalObjectScore = WCAGScore(contrastRatio, 3)
 
-    print(tc.WHITE)
-    print('------------------------------------------------------------------\n')
-    print(f'Relative luminance of colour 1:    {tc.BLUE}{l1}{tc.WHITE}')
-    print(f'Relative luminance of colour 2:    {tc.BLUE}{l2}{tc.WHITE}')
-    print(f'Contrast ratio                     {tc.BLUE}{contrastRatio}')
+  print(tc.WHITE)
+  print('------------------------------------------------------------------\n')
+  print(f'Relative luminance of colour 1:    {tc.BLUE}{l1}{tc.WHITE}')
+  print(f'Relative luminance of colour 2:    {tc.BLUE}{l2}{tc.WHITE}')
+  print(f'Contrast ratio                     {tc.BLUE}{contrastRatio}')
 
-    print(tc.WHITE)
-    print('Contrast ratings for...')
-    print(f' - Normal text:          {normalTextScore}{tc.WHITE}')
-    print(f' - Large text:           {largeTextScore}{tc.WHITE}')
-    print(f' - Graphical objects:    {graphicalObjectScore}')
+  print(tc.WHITE)
+  print('Contrast ratings for...')
+  print(f' - Normal text:          {normalTextScore}{tc.WHITE}')
+  print(f' - Large text:           {largeTextScore}{tc.WHITE}')
+  print(f' - Graphical objects:    {graphicalObjectScore}')
 
-    print(tc.WHITE)
-    print(f'Run again? (y/n){tc.BLUE}')
-    runAgain = str(input(' > ')[0])
-    firstRun = False
+  print(tc.WHITE)
+  print(f'Run again? (y/n){tc.BLUE}')
+  runAgain = str(input(' > ')[0])
+  firstRun = False
 
-  print(tc.PURPLE)
-  print('*================================================================*')
-  print('| GOOD BYE                                                       |')
-  print('*================================================================*')
-
-run()
+print(tc.WHITE)
+print('Closing...')
+time.sleep(1)
